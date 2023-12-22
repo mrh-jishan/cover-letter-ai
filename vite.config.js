@@ -7,8 +7,10 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        devtools:'src/devtools/index.html',
         content: 'src/content/index.jsx',
         popup: 'src/popup/index.html',
+        panel:'src/panel/index.html', 
       },
       output: {
         entryFileNames: 'src/[name]/index.js',
