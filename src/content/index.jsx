@@ -8,6 +8,6 @@
  *
  */
 
+import * as bootstrap from 'bootstrap'
 import('./ui');
 
-console.log('content loaded');
