@@ -1,46 +1,31 @@
-import { createRoot } from 'react-dom/client';
-import injectedStyle from './../style.css?inline';
+import { createRoot } from "react-dom/client";
 import App from './App';
 
-const root = document.createElement('div');
-root.id = 'chrome-cover-letter-root';
+const root = document.createElement("div");
+root.id = "cover-letter-root";
 
-document.body.append(root);
+const placeContentSectionToDOM = () => {
+    document.body.append(root);
+    createRoot(root).render(<App />);
 
-const rootIntoShadow = document.createElement('div');
-rootIntoShadow.id = 'shadow-root';
+};
 
-const shadowRoot = root.attachShadow({ mode: 'open' });
-shadowRoot.appendChild(rootIntoShadow);
-
-
-/** Inject styles into shadow dom */
-const styleElement = document.createElement('style');
-styleElement.innerHTML = injectedStyle;
-shadowRoot.appendChild(styleElement);
-
-// /**
-//  * https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/174
-//  *
-//  * In the firefox environment, the adoptedStyleSheets bug may prevent contentStyle from being applied properly.
-//  * Please refer to the PR link above and go back to the contentStyle.css implementation, or raise a PR if you have a better way to improve it.
-//  */
-
-createRoot(rootIntoShadow).render(<App />);
+placeContentSectionToDOM();
 
 
 
-
-// import { createRoot } from "react-dom/client";
-// import App from './App';
-
-// const root = document.createElement("div");
-// root.id = "cover-letter-root";
-
-// const placeContentSectionToDOM = () => {
-//     document.body.append(root);
-//     createRoot(root).render(<App />);
-
-// };
-
-// placeContentSectionToDOM();
+const observer = new MutationObserver((mutationsList, observer) => {
+    // Look through all mutations that just occured
+    for (const mutation of mutationsList) {
+      // If the addedNode property has a value
+      if (mutation.addedNodes.length) {
+        const rootOld = document.getElementById(root.id);
+        if (!rootOld) {
+            placeContentSectionToDOM();
+        }
+      }
+    }
+  });
+  
+  // Start observing the document with the configured parameters
+  observer.observe(document, { childList: true, subtree: true });

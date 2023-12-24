@@ -8,10 +8,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Popup />
   </React.StrictMode>,
 )
-
-
-
-// "matches": ["https://www.linkedin.com/*"],
-// "css": [
-//   "assets/css/content.css"
-// ],
